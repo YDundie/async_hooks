@@ -24,7 +24,7 @@ const contextCleanup = () => {
   console.log("finished context cleanup");
 };
 
-const logger = (req, res, next) => {
+const contextProvider = (req, res, next) => {
   const context = contexts.get(async_hooks.executionAsyncId); // Get the context object from the contexts Map
   context.jwt = "123" + Date.now().toString();
   next();
@@ -32,7 +32,7 @@ const logger = (req, res, next) => {
 };
 
 //create a server object:
-app.use(logger);
+app.use(contextProvider);
 
 app.get("/test", (req, res) => {
   console.log("Hello from function");
